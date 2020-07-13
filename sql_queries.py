@@ -41,9 +41,9 @@ staging_songs_table_create = \
     """
         CREATE TABLE staging_songs(
             artist_id           text,
-            artist_latitude     numeric,
+            artist_latitude     float,
             artist_location     varchar(max),
-            artist_longitude    numeric,
+            artist_longitude    float,
             artist_name         varchar(max) distkey,
             duration            numeric,
             num_songs           int,
@@ -151,7 +151,7 @@ songplay_table_insert = \
             e.sessionId         AS session_id, 
             e.location          AS location, 
             e.userAgent         AS user_agent
-        FROM staging_events e JOIN staging_songs s ON (e.song = s.title AND e.artist = s.artist_name)
+        FROM staging_events e JOIN staging_songs s ON (e.song = s.title AND e.artist = s.artist_name AND e.length = s.duration)
             WHERE e.page = 'NextSong'
     """
 user_table_insert = \
